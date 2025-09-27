@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Menu do Casamento — Gabriela & Lucas</title>
+  <meta name="description" content="Versão acessível do cardápio de casamento de Gabriela e Lucas, com alto contraste, fontes ampliáveis e navegação por teclado." />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #444444;
+      --accent: #6a1b9a; /* roxo discreto para títulos */
+      --focus: #1e88e5; /* azul para foco visível */
+      --card: #f7f7f7;
+      --border: #e0e0e0;
+      --maxw: 72rem; /* largura máxima legível */
+      --base-font: 20px; /* tamanho base acessível */
+      --line: 1.7; /* espaçamento confortável */
+      /* Paleta do casamento */
+      --rose: #ee6aa7;         /* rosa principal */
+      --rose-light: #f7a7c7;   /* rosa claro */
+      --tiffany: #0abab5;      /* verde tiffany */
+      --leaf: #2e7d32;         /* verde folha */
+      --cream: #fff7f9;        /* fundo suave rosado */
+    }
+
+    /* Modo escuro opcional */
+    .dark {
+      --bg: #0f1115;
+      --fg: #f1f5f9;
+      --muted: #cbd5e1;
+      --accent: #a78bfa;
+      --card: #151822;
+      --border: #232738;
+      --focus: #60a5fa;
+    }
+
+    /* Modo alto contraste opcional */
+    .high-contrast {
+      --bg: #000;
+      --fg: #fff;
+      --muted: #fff;
+      --accent: #ffd400;
+      --card: #000;
+      --border: #fff;
+      --focus: #00ffff;
+    }
+
+    html { font-size: var(--base-font); }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--fg);
+      line-height: var(--line);
+    }
+
+    a { color: var(--accent); }
+    a:focus { outline: 4px solid var(--focus); outline-offset: 2px; }
+
+    .container {
+      margin-inline: auto;
+      max-width: var(--maxw);
+      padding: 1rem;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 10;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: .75rem;
+    }
+
+    .title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: .02em;
+    }
+
+    .controls { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    .btn {
+      appearance: none;
+      border: 2px solid var(--border);
+      background: var(--card);
+      color: var(--fg);
+      padding: .5rem .75rem;
+      border-radius: .75rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: var(--accent); }
+    .btn:focus { outline: 4px solid var(--focus); outline-offset: 2px; }
+
+    .skiplink {
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+    .skiplink:focus {
+      position: static;
+      width: auto;
+      height: auto;
+      padding: .5rem .75rem;
+      margin: .5rem 0;
+      background: var(--focus);
+      color: #000;
+      border-radius: .5rem;
+      font-weight: 700;
+    }
+
+    main { padding-block: 1rem 3rem; }
+
+    .hero {
+      margin-block: 1rem 1.5rem;
+      padding: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+    }
+
+    h1, h2 { line-height: 1.25; }
+    h1 { font-size: 1.6rem; margin: 0 0 .25rem; }
+    h2 { font-size: 1.3rem; color: var(--accent); margin-top: 1.25rem; }
+    p  { margin: .25rem 0 .75rem; color: var(--muted); }
+
+    section {
+      margin-block: 1rem 1.5rem;
+      padding: 1rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+    }
+
+    ul { margin: .5rem 0 0 1.25rem; }
+    li { margin-block: .25rem; }
+
+    /* Foco bem visível para navegação por teclado */
+    :focus-visible { outline: 4px solid var(--focus); outline-offset: 2px; }
+
+    /* Respeita usuários com preferência por menos movimento */
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+
+    /* Estilo de impressão (fonte maior e sem botões) */
+    @media print {
+      header, .controls, .skiplink { display: none !important; }
+      body { color: #000; background: #fff; }
+      section { break-inside: avoid; border: none; }
+      .hero { border: none; }
+    }
+    /* Botões/ícones de fala */
+    .speak-btn {
+      border: 2px solid var(--border);
+      background: var(--card);
+      color: var(--fg);
+      padding: .35rem .6rem;
+      border-radius: .6rem;
+      font-weight: 700;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .speak-btn:hover { border-color: var(--accent); }
+    .speak-btn:focus { outline: 4px solid var(--focus); outline-offset: 2px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,1px,1px); white-space: nowrap; border: 0; }
+      /* Faixa floral decorativa (acessível/aria-hidden) */
+    .floral-band { position: relative; background: var(--cream); border-bottom: 1px solid var(--border); }
+    .floral-wrap { max-width: var(--maxw); margin: 0 auto; padding: .75rem 1rem; }
+    .floral-art { width: 100%; height: 110px; display: block; }
+
+    /* Toggle para ocultar decoração (modo simples) */
+    .no-decor .floral-band { display: none; }
+
+  </style>
+</head>
+<body>
+  <a class="skiplink" href="#conteudo" aria-label="Pular para o conteúdo principal">Pular para o conteúdo</a>
+
+  <header role="banner">
+    <div class="container topbar">
+      <div class="title" aria-label="Título da página">Menu — Gabriela & Lucas</div>
+      <nav class="controls" aria-label="Ajustes de acessibilidade" role="navigation">
+        <button type="button" class="btn" id="fontPlus" aria-label="Aumentar tamanho do texto" title="Aumentar texto (A+)">A+</button>
+        <button type="button" class="btn" id="fontMinus" aria-label="Diminuir tamanho do texto" title="Diminuir texto (A-)">A-</button>
+        <button type="button" class="btn" id="toggleDark" aria-pressed="false" aria-label="Alternar modo escuro" title="Modo escuro">🌙</button>
+        <button type="button" class="btn" id="toggleHC" aria-pressed="false" aria-label="Alternar alto contraste" title="Alto contraste">⚡</button>
+        <button type="button" class="btn" id="toggleDecor" aria-pressed="false" aria-label="Alternar decoração floral" title="Mostrar/ocultar flores">🌸</button>
+        <button type="button" class="btn" id="stopTTS" aria-label="Parar áudio" title="Parar leitura em voz alta">⏹️ Parar áudio</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Faixa floral decorativa (não interfere com leitores de tela) -->
+  <div class="floral-band" aria-hidden="true">
+    <div class="floral-wrap">
+      <svg class="floral-art" viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true" focusable="false">
+        <!-- Fundo suave -->
+        <rect x="0" y="0" width="1200" height="120" fill="var(--cream)"/>
+        <!-- Ramos verdes -->
+        <path d="M0,90 C200,60 260,60 420,90 S700,120 900,90 1100,60 1200,85" fill="none" stroke="var(--leaf)" stroke-width="6" stroke-linecap="round"/>
+        <path d="M0,70 C150,45 240,40 420,70 S710,105 920,75 1120,45 1200,70" fill="none" stroke="var(--tiffany)" stroke-width="4" stroke-linecap="round"/>
+        <!-- Flores rosa (círculos e pétalas simples) -->
+        <g>
+          <g transform="translate(120,65)">
+            <circle r="14" fill="var(--rose)"/>
+            <circle r="6" fill="var(--rose-light)"/>
+          </g>
+          <g transform="translate(360,80)">
+            <circle r="12" fill="var(--rose)"/>
+            <circle r="5" fill="var(--rose-light)"/>
+          </g>
+          <g transform="translate(600,60)">
+            <circle r="16" fill="var(--rose)"/>
+            <circle r="7" fill="var(--rose-light)"/>
+          </g>
+          <g transform="translate(840,78)">
+            <circle r="13" fill="var(--rose)"/>
+            <circle r="5" fill="var(--rose-light)"/>
+          </g>
+          <g transform="translate(1080,62)">
+            <circle r="15" fill="var(--rose)"/>
+            <circle r="6" fill="var(--rose-light)"/>
+          </g>
+        </g>
+        <!-- Folhas -->
+        <g fill="var(--tiffany)">
+          <ellipse cx="180" cy="88" rx="10" ry="5"/>
+          <ellipse cx="400" cy="96" rx="12" ry="6"/>
+          <ellipse cx="640" cy="92" rx="10" ry="5"/>
+          <ellipse cx="880" cy="98" rx="12" ry="6"/>
+          <ellipse cx="1120" cy="90" rx="10" ry="5"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <main id="conteudo" class="container" role="main">
+    <section class="hero" aria-labelledby="evento">
+      <h1 id="evento">Gabriela & Lucas — 28/09/2025</h1>
+      <p>Bem-vindos! Abaixo você encontra nosso cardápio em uma versão com leitura facilitada, alto contraste opcional e controles de tamanho de fonte.</p>
+    </section>
+
+    <section aria-labelledby="coquetel">
+      <h2 id="coquetel">Coquetel</h2>
+      <ul>
+        <li>Risole de camarão</li>
+        <li>Mini pizza marguerita</li>
+        <li>Trouxinha folhada de frango</li>
+        <li>Coxinha brasileira</li>
+        <li>Dadinho de tapioca</li>
+        <li>Baked potato com cream cheese</li>
+        <li>Bruschetta caprese</li>
+        <li>Ouriço de milho com queijo</li>
+        <li>Verrine de camarão</li>
+        <li>Sushi de abobrinha</li>
+        <li>Espeto napolitano</li>
+        <li>Esfera de brie com damasco</li>
+        <li>Ceviche de salmão</li>
+        <li>Penne ao limone</li>
+      </ul>
+    </section>
+
+    
+
+    <section aria-labelledby="jantar">
+      <h2 id="jantar">Jantar</h2>
+      <ul>
+        <li>Rondelli de presunto e queijo — molhos: ao sugo ou bechamel</li>
+        <li>Escalope de mignon ao molho madeira, acompanhado de purê de batata e farofa crocante</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="sobremesa">
+      <h2 id="sobremesa">Sobremesa</h2>
+      <ul>
+        <li>Crème brûlée</li>
+        <li>Bolo de leite ninho com morango</li>
+        <li><strong>Sorvete vintage — sabores:</strong> uva, morango, groselha, chiclete, maracujá, maçã verde</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="finger">
+      <h2 id="finger">Ilha Australiana</h2>
+      <ul>
+        <li>Australian Potato (batatas recheadas em formato de pétala)</li>
+        <li>Buffalo wings (com molho blue cheese)</li>
+        <li>Costelinha suína tradicional (com molho barbecue)</li>
+        <li>Bolinhos de ribs BBQ (no palito, com barbecue)</li>
+        <li>Mini lanche de pulled pork (com pétalas de cebola empanada, no pão australiano)</li>
+        <li>Dream cinnamon — releitura com calda de maçã, sorvete de baunilha, chantilly, croutons de canela, morango e nozes caramelizadas</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="finalizacao">
+      <h2 id="finalizacao">Finalização</h2>
+      <ul>
+        <li>Petit four</li>
+        <li>Balas</li>
+        <li>Licor</li>
+        <li>Chá e café</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="bebidas">
+      <h2 id="bebidas">Bebidas</h2>
+      <ul>
+        <li>Suco natural (morango ou abacaxi com hortelã)</li>
+        <li>Refrigerantes (Coca‑Cola ou Guaraná)</li>
+        <li>Água mineral (com e sem gás)</li>
+        <li>Água aromatizada</li>
+        <li>Cerveja (Original)</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="bar">
+      <h2 id="bar">Bar de Drinks</h2>
+      <ul>
+        <li><strong>🍹 Caipirinhas Tradicionais</strong> (Cachaça | Saquê | Vodka)
+          <ul>
+            <li>🍋 Limão</li>
+            <li>🍓 Morango</li>
+            <li>🍍 Abacaxi</li>
+            <li>🥭 Maracujá</li>
+            <li>🥝 Kiwi</li>
+            <li>🍇 Uva verde</li>
+          </ul>
+        </li>
+        <li><strong>🍸 Coquetéis alcoólicos — 10 variedades</strong>
+          <ul>
+            <li>🥥 Piña Colada</li>
+            <li>🍑 Sex on the Beach</li>
+            <li>🌿 Mojito</li>
+            <li>🍏 Green Apple Mojito</li>
+            <li>🍹 Bartô</li>
+            <li>🍹 Spencer</li>
+            <li>🥜 Peanut Crunch</li>
+            <li>☕ Ice Coffee</li>
+            <li>🍸 Gin Tônica (12 variedades)</li>
+            <li>🍺 Moscow Mule</li>
+          </ul>
+        </li>
+        <li><strong>🥤 Coquetéis sem álcool — 6 variedades</strong>
+          <ul>
+            <li>🥥 Piña Colada</li>
+            <li>🍑 Sex on the Beach</li>
+            <li>🌿 Mojito</li>
+            <li>🍏 Green Apple Mojito</li>
+            <li>🍹 Bartô</li>
+            <li>🍹 Spencer</li>
+          </ul>
+        </li>
+        <li><strong>⚡ Energético</strong> Baly Tropical para Gin</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="doces">
+      <h2 id="doces">Doces Finos</h2>
+      <ul>
+        <li>Caixetas de nutella com avelã</li>
+        <li>Copinhos de cereja (ganache)</li>
+        <li>Caixetas de mertilo com amora</li>
+        <li>Tartelete meia esfera</li>
+        <li>Tartelete dourada de nutella</li>
+        <li>Copinho de choc. branco com limão</li>
+        <li>Surpresa de uva verde com casca de choc. branco</li>
+        <li>Brigadeiro de cookie</li>
+        <li>Coração aberto com bicho de pé</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="acessibilidade" aria-live="polite">
+      <h2 id="acessibilidade">Ajuda de acessibilidade</h2>
+      <p>
+        Use os botões no topo para <strong>aumentar</strong> ou <strong>diminuir</strong> o tamanho do texto, ligar o <strong>modo escuro</strong> ou ativar o <strong>alto contraste</strong>.
+        Também é possível navegar por teclado: <kbd>Tab</kbd> para avançar, <kbd>Shift</kbd>+<kbd>Tab</kbd> para voltar.
+      </p>
+      <p>
+        Para <strong>áudio</strong>: clique no título de cada seção (ex.: <em>Coquetel</em>) para ouvir um resumo do que ela contém, ou clique no ícone <span aria-hidden="true">🔊</span> ao lado de cada item (ex.: <em>Risole de camarão</em>) para ouvi-lo individualmente.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const body = document.body;
+
+      const btnPlus = document.getElementById('fontPlus');
+      const btnMinus = document.getElementById('fontMinus');
+      const btnDark = document.getElementById('toggleDark');
+      const btnHC = document.getElementById('toggleHC');
+      const btnDecor = document.getElementById('toggleDecor');
+
+      const clamp = (v, min, max) => Math.min(Math.max(v, min), max);
+
+      function getBase() {
+        const val = getComputedStyle(root).getPropertyValue('--base-font').trim();
+        return parseFloat(val.replace('px','')) || 20;
+      }
+      function setBase(px) { root.style.setProperty('--base-font', px + 'px'); }
+
+      btnPlus.addEventListener('click', () => {
+        const next = clamp(getBase() + 2, 16, 28);
+        setBase(next);
+      });
+      btnMinus.addEventListener('click', () => {
+        const next = clamp(getBase() - 2, 16, 28);
+        setBase(next);
+      });
+
+      btnDark.addEventListener('click', () => {
+        const isDark = body.classList.toggle('dark');
+        btnDark.setAttribute('aria-pressed', String(isDark));
+      });
+
+      btnHC.addEventListener('click', () => {
+        const isHC = body.classList.toggle('high-contrast');
+        if (isHC) { body.classList.remove('dark'); btnDark.setAttribute('aria-pressed', 'false'); }
+        btnHC.setAttribute('aria-pressed', String(isHC));
+      });
+
+      // NOVO: alternar decoração floral
+      btnDecor.addEventListener('click', () => {
+        const off = body.classList.toggle('no-decor');
+        btnDecor.setAttribute('aria-pressed', String(off));
+      });
+
+      // Persistência simples em sessão
+      const save = () => sessionStorage.setItem('menu-access', JSON.stringify({
+        base: getBase(),
+        dark: body.classList.contains('dark'),
+        hc: body.classList.contains('high-contrast'),
+        decor: !body.classList.contains('no-decor')
+      }));
+
+      const load = () => {
+        try {
+          const raw = sessionStorage.getItem('menu-access');
+          if (!raw) return;
+          const { base, dark, hc, decor } = JSON.parse(raw);
+          if (base) setBase(clamp(base, 16, 28));
+          if (dark) body.classList.add('dark');
+          if (hc) { body.classList.add('high-contrast'); body.classList.remove('dark'); }
+          if (decor === false) body.classList.add('no-decor');
+          btnDark.setAttribute('aria-pressed', String(body.classList.contains('dark')));
+          btnHC.setAttribute('aria-pressed', String(body.classList.contains('high-contrast')));
+          btnDecor.setAttribute('aria-pressed', String(!body.classList.contains('no-decor')));
+        } catch {}
+      };
+
+      ['click', 'keydown'].forEach(evt => document.addEventListener(evt, save));
+      window.addEventListener('beforeunload', save);
+      load();
+    })();
+  </script>
+  <script>
+    (function(){
+      var body = document.body;
+      var btnStop = document.getElementById('stopTTS');
+
+      // Suporte a TTS
+      var hasTTS = typeof window !== 'undefined' && 'speechSynthesis' in window;
+      var synth = hasTTS ? window.speechSynthesis : null;
+
+      function stopSpeak(){ try { synth && synth.cancel(); } catch(e){} }
+      function speak(text){
+        if(!hasTTS || !text) return;
+        stopSpeak();
+        var u = new SpeechSynthesisUtterance(text);
+        u.lang = 'pt-BR';
+        u.rate = 1.0; u.pitch = 1.0; u.volume = 1.0;
+        synth.speak(u);
+      }
+      if(btnStop){ btnStop.addEventListener('click', stopSpeak); }
+
+      function buildSectionDescription(section){
+        var h2 = section.querySelector('h2');
+        var title = h2 && h2.textContent ? h2.textContent.trim() : 'Seção';
+        var items = Array.prototype.slice.call(section.querySelectorAll('ul > li')).map(function(li){
+          return li.textContent.replace('🔊','').trim();
+        }).filter(function(t){ return t && t.length; });
+        return items.length ? (title + '. Os itens desta seção são: ' + items.join('; ') + '.') : title;
+      }
+
+      function enhance(){
+        if(!hasTTS) return; // se o navegador não suportar, não mostra controles extras
+
+        // Títulos das seções: falar o resumo
+        Array.prototype.forEach.call(document.querySelectorAll('main section'), function(sec){
+          var h2 = sec.querySelector('h2');
+          var ul = sec.querySelector('ul');
+          if(h2 && ul){
+            h2.setAttribute('tabindex','0');
+            h2.setAttribute('role','button');
+            h2.setAttribute('aria-label','Ouvir resumo da seção ' + h2.textContent.trim());
+            h2.title = 'Clique ou pressione Enter para ouvir o resumo desta seção';
+            var onSpeakSection = function(){ speak(buildSectionDescription(sec)); };
+            h2.addEventListener('click', onSpeakSection);
+            h2.addEventListener('keydown', function(e){ if(e.key==='Enter' || e.key===' '){ e.preventDefault(); onSpeakSection(); }});
+
+            // Botão ao lado do título
+            var btn = document.createElement('button');
+            btn.type = 'button'; btn.className = 'speak-btn';
+            btn.setAttribute('aria-label','Reproduzir áudio da seção ' + h2.textContent.trim());
+            btn.textContent = '🔊 Ler seção';
+            h2.insertAdjacentElement('afterend', btn);
+            btn.addEventListener('click', onSpeakSection);
+          }
+
+          // Ícone por item
+          if(ul){
+            Array.prototype.forEach.call(ul.querySelectorAll('li'), function(li){
+              if(li.querySelector('.speak-btn')) return;
+              var text = li.cloneNode(true).textContent.replace(/[🍋🍓🍍🥭🥝🍇🍑🌿🍏🥥🥜☕🍸🍺🥤⚡]/g,'').trim();
+              var b = document.createElement('button');
+              b.type = 'button'; b.className = 'speak-btn';
+              b.setAttribute('aria-label', 'Ouvir: ' + text);
+              b.title = 'Ouvir este item';
+              b.textContent = '🔊';
+              li.appendChild(document.createTextNode(' '));
+              li.appendChild(b);
+              b.addEventListener('click', function(){ speak(text); });
+            });
+          }
+        });
+      }
+
+      if(document.readyState === 'loading'){
+        document.addEventListener('DOMContentLoaded', enhance);
+      } else { enhance(); }
+
+      // Se não houver suporte, esconde o botão global
+      if(!hasTTS && btnStop){ btnStop.setAttribute('hidden','hidden'); }
+    })();
+  </script>
+</body>
+</html>
